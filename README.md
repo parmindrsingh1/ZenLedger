@@ -23,4 +23,4 @@ v1.0 (In Development)
 
 ## Author
 
-Parmindr Singh
+Parminder Singh
