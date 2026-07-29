@@ -394,6 +394,21 @@ clearClientBtn?.addEventListener("click", clearClientForm);
 
 clientSearch?.addEventListener("input", renderClients);
 
+const exportJsonBtn = document.getElementById("export-clients-btn");
+const exportCsvBtn = document.getElementById("export-csv-btn");
+const exportExcelBtn = document.getElementById("export-excel-btn");
+const importJsonBtn = document.getElementById("import-json-btn");
+const importJsonFile = document.getElementById("import-json-file");
+
+exportJsonBtn?.addEventListener("click", exportClientsJSON);
+exportCsvBtn?.addEventListener("click", exportClientsCSV);
+exportExcelBtn?.addEventListener("click", exportClientsExcel);
+
+importJsonBtn?.addEventListener("click", () => {
+    importJsonFile.click();
+});
+
+importJsonFile?.addEventListener("change", importClientsJSON);
 
 /* =====================================================
    Live Validation — Client Name (required)
@@ -510,6 +525,32 @@ function saveClient() {
 
     }
 
+// Check duplicate GSTIN
+const duplicateGSTIN = clients.find((c, index) =>
+    c.gstin.toUpperCase() === gstin.value.trim().toUpperCase() &&
+    index !== editIndex
+);
+
+if (duplicateGSTIN) {
+    alert("GSTIN already exists.");
+    gstin.focus();
+    return;
+}
+
+// Check duplicate PAN
+const duplicatePAN = clients.find((c, index) =>
+    c.pan.toUpperCase() === pan.value.trim().toUpperCase() &&
+    index !== editIndex
+);
+
+if (duplicatePAN) {
+    alert("PAN already exists.");
+    pan.focus();
+    return;
+}
+
+
+
     const client = {
 
         name: clientName.value.trim(),
@@ -557,7 +598,6 @@ function saveClient() {
     renderClients();
 
 }
-
 
 /* =====================================================
    Render Clients
@@ -804,3 +844,221 @@ function clearClientForm() {
 ===================================================== */
 
 renderClients();
+
+/* ---------- Export Clients ---------- */
+
+function exportClientsJSON() {
+
+    if (clients.length === 0) {
+        alert("No clients available to export.");
+        return;
+    }
+
+    const blob = new Blob(
+        [JSON.stringify(clients, null, 2)],
+        { type: "application/json" }
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        `ZenLedger_Clients_${new Date().toISOString().split("T")[0]}.json`;
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+}
+
+/* ----------Export CSV---------- */
+
+function exportClientsCSV() {
+
+    if (clients.length === 0) {
+        alert("No clients available to export.");
+        return;
+    }
+
+    const headers = [
+        "Client Name",
+        "Firm Name",
+        "GSTIN",
+        "PAN",
+        "Mobile",
+        "Email",
+        "Address"
+    ];
+
+    const rows = clients.map(client => [
+        client.name,
+        client.firm,
+        client.gstin,
+        client.pan,
+        client.mobile,
+        client.email,
+        client.address
+    ]);
+
+    const csvContent = [
+        headers,
+        ...rows
+    ]
+    .map(row =>
+        row.map(value => `"${String(value ?? "").replace(/"/g, '""')}"`).join(",")
+    )
+    .join("\n");
+
+    const blob = new Blob([csvContent], {
+        type: "text/csv;charset=utf-8;"
+    });
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = `ZenLedger_Clients_${new Date().toISOString().split("T")[0]}.csv`;
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+}
+
+/* ----------Export Excel---------- */
+
+function exportClientsExcel() {
+
+    if (clients.length === 0) {
+        alert("No clients available to export.");
+        return;
+    }
+
+    const data = clients.map(client => ({
+        "Client Name": client.name,
+        "Firm Name": client.firm,
+        "GSTIN": client.gstin,
+        "PAN": client.pan,
+        "Mobile": client.mobile,
+        "Email": client.email,
+        "Address": client.address
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+
+    const workbook = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(
+        workbook,
+        worksheet,
+        "Clients"
+    );
+
+    XLSX.writeFile(
+        workbook,
+        `ZenLedger_Clients_${new Date().toISOString().split("T")[0]}.xlsx`
+    );
+}
+
+/* ----------Export JSON---------- */
+
+function importClientsJSON(event) {
+
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+
+        try {
+
+            const importedClients = JSON.parse(e.target.result);
+
+            if (!Array.isArray(importedClients)) {
+                alert("Invalid JSON file.");
+                return;
+            }
+
+            let imported = 0;
+            let skipped = 0;
+            let invalid = 0;
+
+            importedClients.forEach(client => {
+
+                if (
+                    !client.name ||
+                    !client.gstin ||
+                    !client.pan ||
+                    !client.mobile
+                ) {
+                    invalid++;
+                    return;
+                }
+
+                const duplicate = clients.some(existing =>
+                    existing.gstin.toUpperCase() === client.gstin.toUpperCase() ||
+                    existing.pan.toUpperCase() === client.pan.toUpperCase()
+                );
+
+                if (duplicate) {
+                    skipped++;
+                    return;
+                }
+
+                clients.push({
+                    name: client.name,
+                    firm: client.firm || "",
+                    gstin: client.gstin,
+                    pan: client.pan,
+                    mobile: client.mobile,
+                    email: client.email || "",
+                    address: client.address || ""
+                });
+
+                imported++;
+
+            });
+
+            localStorage.setItem(
+                CLIENT_STORAGE_KEY,
+                JSON.stringify(clients)
+            );
+
+            renderClients();
+
+            alert(
+                `Import Complete\n\nImported: ${imported}\nSkipped: ${skipped}\nInvalid: ${invalid}`
+            );
+
+        } catch {
+
+            alert("Invalid JSON file.");
+
+        }
+
+        event.target.value = "";
+
+    };
+
+    reader.readAsText(file);
+
+}
+
+/* ----------Service Worker---------- */
+
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker
+            .register("./service-worker.js")
+            .then(() => {
+                console.log("Service Worker registered successfully.");
+            })
+            .catch(error => {
+                console.error("Service Worker registration failed:", error);
+            });
+    });
+}
