@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ZenLedger | Daily CA Utility</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="brand">
+<h1>Zen<span>Ledger</span></h1>
+<p>Daily Compliance Made Easy</p>
+</div>
+<nav class="sidebar-nav">
+<button class="nav-item active-btn" data-target="gst-tool" data-index="01" type="button"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="20" x2="6" y2="12"/><line x1="12" y1="20" x2="12" y2="6"/><line x1="18" y1="20" x2="18" y2="14"/></svg></span><span>GST Calculator</span></button>
+<button class="nav-item" data-target="income-tax-tool" data-index="02" type="button"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 9.5h4a2 2 0 0 1 0 4H9m0 0h5m-5 0v2m3-8v1m0 9v1"/></svg></span><span>Income Tax</span></button>
+<button class="nav-item" data-target="due-date-tool" data-index="03" type="button"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg></span><span>Due Date Tracker</span></button>
+<button class="nav-item" data-target="tds-tool" data-index="04" type="button"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3z"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/></svg></span><span>TDS Calculator</span></button>
+<button class="nav-item" data-target="client-tool" data-index="05" type="button"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg></span><span>Client Manager</span></button>
+</nav>
+</aside>
+<main class="main-area">
+<div class="blob"></div>
+<header class="dashboard-header">
+<div>
+<h2>Welcome 👋</h2>
+<p>All your important CA tools at one place.</p>
+</div>
+<div class="dashboard-info">
+<div class="stat-card"><h3>5</h3><span>Available Tools</span></div>
+<div class="stat-card"><h3>100%</h3><span>Offline</span></div>
+<div class="stat-card"><h3>0</h3><span>Cloud Usage</span></div>
+</div>
+</header>
+<section class="content-area">
+<section class="tool-section active" id="gst-tool">
+<div class="tool-heading">
+<span class="tool-tag">Tax Tool</span>
+<h2>GST Calculator</h2>
+<p>Calculate GST with Inclusive / Exclusive mode and CGST-SGST or IGST breakup.</p>
+</div>
+<div class="calculator">
+<div class="form-group">
+<label for="gst-amount">Amount (₹)</label>
+<input id="gst-amount" placeholder="Enter Amount" type="number"/>
+</div>
+<div class="form-group">
+<label for="gst-rate">GST Rate</label>
+<select id="gst-rate">
+<option value="5">5%</option>
+<option value="12">12%</option>
+<option selected="" value="18">18%</option>
+<option value="28">28%</option>
+</select>
+</div>
+<div class="form-group">
+<label>Calculation Type</label>
+<div class="radio-group">
+<label class="radio-item"><input checked="" name="gst-mode" type="radio" value="exclusive"/> Add GST <small>(Exclusive → Inclusive)</small></label>
+<label class="radio-item"><input name="gst-mode" type="radio" value="inclusive"/> Remove GST <small>(Inclusive → Exclusive)</small></label>
+</div>
+</div>
+<div class="form-group">
+<label>Tax Type</label>
+<div class="radio-group">
+<label class="radio-item"><input checked="" name="tax-type" type="radio" value="cgst"/> CGST + SGST</label>
+<label class="radio-item"><input name="tax-type" type="radio" value="igst"/> IGST</label>
+</div>
+</div>
+<div class="button-group">
+<button class="primary-btn" id="gst-calculate-btn" type="button">Calculate</button>
+<button class="secondary-btn" id="gst-clear-btn" type="button">Clear</button>
+</div>
+<div class="result-box" id="gst-result">
+<div class="result-row"><span>Base Amount</span><strong id="base-amount">₹0.00</strong></div>
+<div class="result-row"><span>Total GST</span><strong id="gst-amount-result">₹0.00</strong></div>
+<div class="result-row" id="cgst-row"><span>CGST</span><strong id="cgst-result">₹0.00</strong></div>
+<div class="result-row" id="sgst-row"><span>SGST</span><strong id="sgst-result">₹0.00</strong></div>
+<div class="result-row" id="igst-row"><span>IGST</span><strong id="igst-result">₹0.00</strong></div>
+<hr/>
+<div class="result-row total-row"><span>Final Amount</span><strong id="final-amount">₹0.00</strong></div>
+</div>
+</div>
+</section>
+<section class="tool-section" id="income-tax-tool">
+<div class="tool-heading">
+<span class="tool-tag">Tax Tool</span>
+<h2>Income Tax Calculator</h2>
+<p>Calculate income tax under the New Tax Regime (FY 2025-26 / AY 2026-27 slabs, includes Section 87A rebate).</p>
+</div>
+<div class="calculator">
+<div class="form-group">
+<label for="gross-income">Gross Annual Income (₹)</label>
+<input id="gross-income" placeholder="Enter Gross Income" type="number"/>
+</div>
+<div class="button-group">
+<button class="primary-btn" id="income-tax-calculate-btn" type="button">Calculate Tax</button>
+<button class="secondary-btn" id="income-tax-clear-btn" type="button">Clear</button>
+</div>
+<div class="result-box">
+<div class="result-row"><span>Gross Income</span><strong id="gross-income-result">₹0.00</strong></div>
+<div class="result-row"><span>Standard Deduction</span><strong id="standard-deduction-result">₹75,000.00</strong></div>
+<div class="result-row"><span>Taxable Income</span><strong id="taxable-income-result">₹0.00</strong></div>
+<div class="result-row"><span>Income Tax (Slab-wise)</span><strong id="income-tax-result">₹0.00</strong></div>
+<div class="result-row"><span>Rebate (Sec 87A)</span><strong id="rebate-result">₹0.00</strong></div>
+<div class="result-row"><span>Health &amp; Education Cess (4%)</span><strong id="cess-result">₹0.00</strong></div>
+<hr/>
+<div class="result-row total-row"><span>Total Tax</span><strong id="total-tax-result">₹0.00</strong></div>
+</div>
+</div>
+</section>
+<section class="tool-section" id="due-date-tool">
+<div class="tool-heading">
+<span class="tool-tag">Compliance</span>
+<h2>Due Date Tracker</h2>
+<p>Manage compliance due dates offline.</p>
+</div>
+<div class="calculator">
+<div class="form-group">
+<label for="compliance-type">Compliance Type</label>
+<select id="compliance-type">
+<option>GST Return</option><option>GSTR-1</option><option>GSTR-3B</option><option>TDS Return</option><option>TCS Return</option><option>Income Tax Return</option><option>Advance Tax</option><option>ROC Compliance</option><option>Other</option>
+</select>
+</div>
+<div class="form-group">
+<label for="due-date">Due Date</label>
+<input id="due-date" type="date"/>
+</div>
+<div class="form-group">
+<label for="remarks">Remarks</label>
+<input id="remarks" placeholder="Client Name / Notes" type="text"/>
+</div>
+<div class="button-group">
+<button class="primary-btn" id="save-due-date" type="button">Save</button>
+<button class="secondary-btn" id="clear-due-date" type="button">Clear</button>
+</div>
+<div class="result-box">
+<div class="result-row"><span>Saved Due Dates</span><strong id="total-records">0</strong></div>
+<hr/>
+<div id="due-date-list"><p class="empty-message">No due dates added.</p></div>
+</div>
+</div>
+</section>
+<section class="tool-section" id="tds-tool">
+<div class="tool-heading">
+<span class="tool-tag">Tax Tool</span>
+<h2>TDS Calculator</h2>
+<p>Calculate TDS based on section, deductee type and PAN availability.</p>
+<p class="rate-updated-note">Rates updated as per new TDS/TCS rate chart.</p>
+</div>
+<div class="calculator">
+<div class="form-group">
+<label for="deductee-type">Deductee Type</label>
+<select id="deductee-type">
+<option value="individual">Individual / HUF</option>
+<option value="other">Company / Firm</option>
+</select>
+</div>
+<div class="form-group">
+<label for="tds-section">TDS Section</label>
+<select id="tds-section">
+<option value="192">192 - Salary (Slab Rate)</option>
+<option value="194A">194A - Interest (Other than Securities)</option>
+<option value="194C">194C - Contractor Payments</option>
+<option value="194H">194H - Commission / Brokerage</option>
+<option value="194I">194-I - Rent (Plant &amp; Machinery)</option>
+<option value="194IB">194-IB - Rent (Land / Building / Furniture)</option>
+<option value="194IA">194-IA - Transfer of Immovable Property</option>
+<option value="194J-tech">194J - Technical Services</option>
+<option value="194J-prof">194J - Professional Services</option>
+<option value="194Q">194Q - Purchase of Goods</option>
+<option value="194R">194R - Benefit / Perquisite</option>
+<option value="194T">194T - Payment to Partner</option>
+<option value="206C">206C - TCS on Sale of Scrap</option>
+<option value="206C1F">206C(1F) - TCS on Motor Vehicle (&gt;10L)</option>
+<option value="other">Others</option>
+</select>
+</div>
+<div class="form-group">
+<label for="payment-amount">Payment Amount (₹)</label>
+<input id="payment-amount" placeholder="Enter Payment Amount" type="number"/>
+</div>
+<div class="form-group">
+<label>PAN Available?</label>
+<div class="radio-group">
+<label class="radio-item"><input checked="" name="pan-status" type="radio" value="yes"/> Yes</label>
+<label class="radio-item"><input name="pan-status" type="radio" value="no"/> No</label>
+</div>
+</div>
+<div class="button-group">
+<button class="primary-btn" id="tds-calculate-btn" type="button">Calculate</button>
+<button class="secondary-btn" id="tds-clear-btn" type="button">Clear</button>
+</div>
+<div class="result-box">
+<div class="result-row"><span>TDS Rate</span><strong id="tds-rate-result">0%</strong></div>
+<div class="result-row"><span>TDS Amount</span><strong id="tds-amount-result">₹0.00</strong></div>
+<hr/>
+<div class="result-row total-row"><span>Net Payable</span><strong id="net-payment-result">₹0.00</strong></div>
+</div>
+</div>
+</section>
+<section class="tool-section" id="client-tool">
+<div class="tool-heading">
+<span class="tool-tag">Data Manager</span>
+<h2>Client Manager</h2>
+<p>Manage your client records offline.</p>
+</div>
+
+<div class="search-box">
+<label for="client-search">🔍 Search Existing Clients</label>
+<input id="client-search" placeholder="Search by Name, GSTIN or PAN" type="text"/>
+</div>
+
+<div class="calculator">
+<h3 class="form-subheading">Add New / Edit Client</h3>
+<div class="form-group">
+<label for="client-name">Client Name <span class="required-mark">*</span></label>
+<input id="client-name" type="text"/>
+<span class="field-error" id="client-name-error">Client Name is required</span>
+</div>
+<div class="form-group"><label for="firm-name">Firm Name</label><input id="firm-name" type="text"/></div>
+<div class="form-group">
+<label for="gstin">GSTIN <span class="required-mark">*</span></label>
+<input id="gstin" type="text"/>
+<span class="field-error" id="gstin-error">Enter a valid 15-character GSTIN</span>
+</div>
+<div class="form-group">
+<label for="pan">PAN <span class="required-mark">*</span></label>
+<input id="pan" type="text"/>
+<span class="field-error" id="pan-error">Enter a valid 10-character PAN</span>
+</div>
+<div class="form-group">
+<label for="mobile">Mobile Number <span class="required-mark">*</span></label>
+<input id="mobile" type="tel"/>
+<span class="field-error" id="mobile-error">Enter a valid 10-digit mobile number</span>
+</div>
+<div class="form-group"><label for="email">Email</label><input id="email" type="email"/></div>
+<div class="form-group"><label for="address">Address</label><input id="address" type="text"/></div>
+<div class="button-group">
+<button class="primary-btn" id="save-client-btn" type="button">Save Client</button>
+<button class="secondary-btn" id="clear-client-btn" type="button">Clear</button>
+</div>
+<div class="result-box">
+<div class="result-row"><span>Total Clients</span><strong id="client-count">0</strong></div>
+<hr/>
+<div id="client-list">
+<p class="empty-message">No clients added.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+<footer class="site-footer">
+    <p class="footer-about">Built to help CAs handle daily GST, tax, TDS, and client-record tasks quickly — right from the browser, with no data ever leaving this device.</p>
+    <p class="footer-disclaimer">⚠️ These calculators are for quick estimates and reference only. Please verify all figures with a qualified CA or tax professional before filing.</p>
+    <p class="footer-copyright">&copy; 2026 ZenLedger — Built for daily use</p>
+</footer>
+
+</main>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

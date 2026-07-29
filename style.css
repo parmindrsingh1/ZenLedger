@@ -1,0 +1,951 @@
+/* ===========================
+   Root Variables
+=========================== */
+
+:root{
+
+    --primary:#0B3D4C;
+    --primary-light:#145B70;
+    --ink:#0A2B36;
+
+    --accent:#C8A24A;
+    --accent-soft:#EEDDAF;
+
+    --background:#F1EFE6;
+    --paper:#FFFFFF;
+
+    --border:#E3DFD2;
+
+    --text:#20262A;
+    --text-light:#63706E;
+
+    --success:#16A34A;
+    --danger:#C0392B;
+
+    --shadow:0 10px 30px rgba(11,61,76,.09);
+    --shadow-soft:0 4px 14px rgba(11,61,76,.06);
+    --radius:16px;
+    --transition:.22s ease;
+
+    --font-display:"Sora", sans-serif;
+    --font-body:"Inter", sans-serif;
+    --font-mono:"IBM Plex Mono", monospace;
+}
+
+
+/* ===========================
+   Reset
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:var(--font-body);
+    background:var(--background);
+    color:var(--text);
+}
+
+
+/* ===========================
+   Layout
+=========================== */
+
+.layout{
+    display:grid;
+    grid-template-columns:270px 1fr;
+    min-height:100vh;
+}
+
+
+/* ===========================
+   Sidebar
+=========================== */
+
+.sidebar{
+    background:
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0) 40%),
+        linear-gradient(180deg,var(--ink),var(--primary) 65%,var(--primary-light));
+    color:white;
+    padding:34px 22px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    border-right:1px solid rgba(200,162,74,.25);
+}
+
+.brand{
+    padding-bottom:22px;
+    border-bottom:1px solid rgba(255,255,255,.12);
+    margin-bottom:26px;
+}
+
+.brand h1{
+    font-family:var(--font-display);
+    font-size:26px;
+    font-weight:700;
+    letter-spacing:.2px;
+}
+
+.brand h1 span{
+    color:var(--accent);
+}
+
+.brand p{
+    font-size:12.5px;
+    opacity:.7;
+    margin-top:6px;
+    letter-spacing:.3px;
+    text-transform:uppercase;
+    font-family:var(--font-mono);
+}
+
+
+/* ===========================
+   Navigation — ledger register style
+=========================== */
+
+.sidebar-nav{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.nav-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    border:none;
+    background:none;
+    color:rgba(255,255,255,.78);
+    padding:14px 12px;
+    border-radius:10px;
+    cursor:pointer;
+    font-family:var(--font-body);
+    font-size:14.5px;
+    font-weight:500;
+    transition:var(--transition);
+    position:relative;
+}
+
+.nav-item::before{
+    content:attr(data-index);
+    font-family:var(--font-mono);
+    font-size:9.5px;
+    font-weight:600;
+    color:rgba(255,255,255,.35);
+    letter-spacing:.5px;
+    position:absolute;
+    top:6px;
+    left:12px;
+}
+
+.nav-item{
+    padding-top:18px;
+}
+
+.nav-item:hover{
+    background:rgba(255,255,255,.06);
+    color:white;
+}
+
+.active-btn{
+    background:var(--accent);
+    color:var(--ink);
+    font-weight:700;
+}
+
+.active-btn::before{
+    color:rgba(10,43,54,.5);
+}
+
+.icon{
+    font-size:17px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:20px;
+    height:20px;
+    flex-shrink:0;
+}
+
+.icon svg{
+    width:19px;
+    height:19px;
+}
+
+
+/* ===========================
+   Main Area
+=========================== */
+
+.main-area{
+    padding:44px 48px;
+    position:relative;
+    overflow:hidden;
+    background-image:repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 33px,
+        rgba(11,61,76,.045) 34px
+    );
+    background-attachment:local;
+}
+
+/* Decorative Circle */
+
+.blob{
+    width:380px;
+    height:380px;
+    position:absolute;
+    right:-140px;
+    top:-160px;
+    border-radius:50%;
+    background:radial-gradient(circle,var(--accent-soft),transparent 70%);
+    opacity:.5;
+    pointer-events:none;
+}
+
+
+/* ===========================
+   Header
+=========================== */
+
+.dashboard-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:30px;
+    margin-bottom:32px;
+    position:relative;
+    z-index:1;
+}
+
+.dashboard-header h2{
+    font-family:var(--font-display);
+    color:var(--primary);
+    font-size:29px;
+    margin-bottom:6px;
+}
+
+.dashboard-header p{
+    color:var(--text-light);
+    font-size:14.5px;
+}
+
+
+/* ===========================
+   Stat Cards
+=========================== */
+
+.dashboard-info{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+.stat-card{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:14px;
+    min-width:120px;
+    padding:16px 18px;
+    box-shadow:var(--shadow-soft);
+}
+
+.stat-card h3{
+    font-family:var(--font-mono);
+    color:var(--primary);
+    font-size:22px;
+    font-weight:600;
+}
+
+.stat-card span{
+    color:var(--text-light);
+    font-size:11.5px;
+    letter-spacing:.3px;
+    text-transform:uppercase;
+}
+
+
+/* ===========================
+   Tool Area
+=========================== */
+
+.content-area{
+    position:relative;
+    z-index:1;
+}
+
+.tool-section{
+    display:none;
+    background:var(--paper);
+    border-radius:20px;
+    border:1px solid var(--border);
+    padding:38px;
+    box-shadow:var(--shadow);
+    animation:fade .3s ease;
+}
+
+.tool-section.active{
+    display:block;
+}
+
+
+/* ===========================
+   Tool Heading
+=========================== */
+
+.tool-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:#FBF4E2;
+    color:#8A6A1E;
+    padding:6px 12px;
+    border-radius:6px;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    font-family:var(--font-mono);
+}
+
+.tool-heading h2{
+    font-family:var(--font-display);
+    margin-top:14px;
+    color:var(--primary);
+    font-size:26px;
+}
+
+.tool-heading p{
+    color:var(--text-light);
+    margin-top:8px;
+    margin-bottom:30px;
+    font-size:14.5px;
+}
+
+
+/* =====================================
+   Calculator Form
+===================================== */
+
+.calculator{
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+    max-width:700px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.form-group label{
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--text);
+    letter-spacing:.1px;
+}
+
+input,
+select{
+    width:100%;
+    padding:13px 15px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--paper);
+    font-size:15px;
+    font-family:var(--font-mono);
+    color:var(--text);
+    transition:.2s;
+}
+
+select{
+    font-family:var(--font-body);
+}
+
+input:focus,
+select:focus{
+    outline:none;
+    border-color:var(--primary);
+    box-shadow:0 0 0 4px rgba(11,61,76,.08);
+}
+
+input::placeholder{
+    font-family:var(--font-body);
+    color:#A6ADB0;
+}
+
+
+/* =============================
+   Radio Cards
+============================= */
+
+.radio-group{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:12px;
+}
+
+.radio-item{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:16px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:var(--paper);
+    cursor:pointer;
+    transition:.2s;
+    font-size:14px;
+}
+
+.radio-item:hover{
+    border-color:var(--primary);
+    box-shadow:var(--shadow-soft);
+}
+
+.radio-item:has(input:checked){
+    border-color:var(--accent);
+    background:#FFFCF5;
+}
+
+.radio-item input{
+    width:17px;
+    height:17px;
+    margin-top:2px;
+    accent-color:var(--primary);
+}
+
+.radio-item small{
+    display:block;
+    color:var(--text-light);
+    font-size:11.5px;
+    margin-top:4px;
+}
+
+
+/* =============================
+   Buttons
+============================= */
+
+.button-group{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+.primary-btn,
+.secondary-btn{
+    flex:1;
+    min-width:170px;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    font-family:var(--font-body);
+    font-size:14.5px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.primary-btn{
+    background:var(--primary);
+    color:white;
+    letter-spacing:.2px;
+}
+
+.primary-btn:hover{
+    background:var(--ink);
+}
+
+.secondary-btn{
+    background:#EFEBDD;
+    color:var(--text);
+}
+
+.secondary-btn:hover{
+    background:#E4DFCC;
+}
+
+
+/* =============================
+   Result Card — ledger style
+============================= */
+
+.result-box{
+    margin-top:8px;
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:#FAF9F4;
+    padding:4px 22px;
+}
+
+.result-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:13px 0;
+    border-bottom:1px dashed var(--border);
+}
+
+.result-row:last-child{
+    border-bottom:none;
+}
+
+.result-row span{
+    color:var(--text-light);
+    font-size:14px;
+}
+
+.result-row strong{
+    color:var(--primary);
+    font-size:15.5px;
+    font-family:var(--font-mono);
+    font-variant-numeric:tabular-nums;
+}
+
+.result-box hr{
+    display:none;
+}
+
+.total-row{
+    font-size:15px;
+}
+
+.total-row strong{
+    color:var(--accent);
+    font-size:19px;
+}
+
+
+/* =============================
+   Empty state
+============================= */
+
+.empty-message{
+    color:var(--text-light);
+    font-size:14px;
+    padding:18px 0;
+    text-align:center;
+    font-style:italic;
+}
+
+
+/* ===========================
+   Animation
+=========================== */
+
+@keyframes fade{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
+}
+
+
+/* ===========================
+   Reduced motion
+=========================== */
+
+@media (prefers-reduced-motion: reduce){
+    .tool-section{ animation:none; }
+    *{ transition:none !important; }
+}
+
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media(max-width:992px){
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        position:relative;
+        height:auto;
+        border-right:none;
+        border-bottom:1px solid rgba(200,162,74,.25);
+    }
+
+    .brand{
+        margin-bottom:16px;
+        padding-bottom:14px;
+    }
+
+    .sidebar-nav{
+        flex-direction:row;
+        overflow:auto;
+        padding-bottom:6px;
+        gap:6px;
+    }
+
+    .nav-item{
+        white-space:nowrap;
+        flex-shrink:0;
+    }
+
+    .dashboard-header{
+        flex-direction:column;
+    }
+}
+
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media(max-width:768px){
+
+    .main-area{
+        padding:26px 20px;
+    }
+
+    .button-group{
+        flex-direction:column;
+    }
+
+    .primary-btn,
+    .secondary-btn{
+        width:100%;
+    }
+
+    .radio-group{
+        grid-template-columns:1fr;
+    }
+
+    .tool-section{
+        padding:24px;
+    }
+
+    .dashboard-header h2{
+        font-size:23px;
+    }
+
+    .dashboard-info{
+        width:100%;
+    }
+
+    .stat-card{
+        flex:1;
+        min-width:96px;
+        padding:13px 14px;
+    }
+
+    .result-box{
+        padding:2px 16px;
+    }
+}
+
+@media(max-width:600px){
+    .main-area{
+        padding:20px 16px;
+    }
+
+    .search-box{
+        padding:14px 16px;
+        margin-bottom:20px;
+    }
+
+    .form-subheading{
+        font-size:14px;
+    }
+
+    .tool-heading h2{
+        font-size:21px;
+    }
+
+    .tool-tag{
+        font-size:10px;
+        padding:5px 10px;
+    }
+
+    input, select{
+        font-size:14px;
+        padding:11px 13px;
+    }
+
+    .form-group label{
+        font-size:13px;
+    }
+
+    .field-error{
+        font-size:11.5px;
+    }
+}
+
+@media(max-width:420px){
+    .brand h1{
+        font-size:22px;
+    }
+
+    .brand p{
+        font-size:11px;
+    }
+
+    .dashboard-header h2{
+        font-size:20px;
+    }
+
+    .dashboard-header p{
+        font-size:13px;
+    }
+
+    .stat-card{
+        min-width:88px;
+        padding:11px 12px;
+    }
+
+    .stat-card h3{
+        font-size:19px;
+    }
+
+    .stat-card span{
+        font-size:10.5px;
+    }
+
+    .tool-section{
+        padding:18px;
+        border-radius:16px;
+    }
+
+    .nav-item{
+        font-size:13.5px;
+        padding:12px 10px;
+        padding-top:16px;
+    }
+
+    .nav-item::before{
+        font-size:9px;
+        top:5px;
+        left:10px;
+    }
+
+    .icon svg{
+        width:17px;
+        height:17px;
+    }
+
+    .primary-btn,
+    .secondary-btn{
+        font-size:14px;
+        padding:12px;
+    }
+
+    .result-row span,
+    .result-row strong{
+        font-size:13.5px;
+    }
+
+    .total-row strong{
+        font-size:17px;
+    }
+}
+
+.hidden{
+    display:none;
+}
+
+
+/* ===========================
+   Footer
+=========================== */
+
+.site-footer{
+    position:relative;
+    z-index:1;
+    margin-top:36px;
+    padding-top:24px;
+    border-top:1px solid var(--border);
+}
+
+.footer-about{
+    color:var(--text-light);
+    font-size:13.5px;
+    line-height:1.6;
+    max-width:600px;
+    margin-bottom:14px;
+}
+
+.footer-disclaimer{
+    background:#FBF4E2;
+    color:#8A6A1E;
+    font-size:12.5px;
+    padding:12px 16px;
+    border-radius:10px;
+    max-width:600px;
+    margin-bottom:16px;
+    line-height:1.5;
+}
+
+.footer-copyright{
+    color:var(--text-light);
+    font-size:12px;
+    opacity:.8;
+}
+
+@media(max-width:600px){
+    .site-footer{
+        margin-top:26px;
+        padding-top:18px;
+    }
+    .footer-about,
+    .footer-disclaimer{
+        font-size:12.5px;
+    }
+}
+
+
+/* ===========================
+   Income Tax Calculator
+=========================== */
+
+#income-tax-tool .calculator{ max-width:700px; }
+#income-tax-tool .result-row span{ max-width:70%; }
+#income-tax-tool .result-row strong{ text-align:right; }
+
+
+/* ===========================
+   TDS Calculator
+=========================== */
+
+#tds-tool .calculator{ max-width:700px; }
+#tds-tool .result-row span{ max-width:70%; }
+#tds-tool .result-row strong{ text-align:right; }
+#tds-tool .radio-item{ align-items:center; }
+#tds-tool .result-box{ margin-top:16px; }
+
+
+/* ===========================
+   Client Manager
+=========================== */
+
+#client-tool .calculator{ max-width:700px; }
+
+/* Search box — visually separated from the add-client form */
+.search-box{
+    background:#F3F0E4;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:18px 20px;
+    margin-bottom:28px;
+    max-width:700px;
+}
+
+.search-box label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    color:var(--text-light);
+    margin-bottom:8px;
+}
+
+.search-box input{
+    background:var(--paper);
+}
+
+.form-subheading{
+    font-family:var(--font-display);
+    color:var(--primary);
+    font-size:15px;
+    font-weight:600;
+    padding-bottom:12px;
+    border-bottom:1px solid var(--border);
+}
+
+.required-mark{
+    color:var(--danger);
+    font-weight:700;
+}
+
+.field-error{
+    display:none;
+    color:var(--danger);
+    font-size:12.5px;
+    margin-top:-2px;
+}
+
+.field-error.show-error{
+    display:block;
+}
+
+input.invalid{
+    border-color:var(--danger);
+    box-shadow:0 0 0 4px rgba(192,57,43,.08);
+}
+
+#client-search{ margin-bottom:6px; }
+
+#client-list{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+.client-card{
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:var(--paper);
+    padding:18px;
+    transition:.2s;
+}
+
+.client-card:hover{
+    box-shadow:var(--shadow-soft);
+}
+
+.client-card h3{
+    font-family:var(--font-display);
+    color:var(--primary);
+    margin-bottom:10px;
+    font-size:17px;
+}
+
+.client-meta{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px 20px;
+    margin-bottom:14px;
+}
+
+.client-meta p{
+    font-size:13.5px;
+    color:var(--text);
+    word-break:break-word;
+}
+
+.client-meta p strong{
+    font-family:var(--font-mono);
+    color:var(--text-light);
+    font-weight:500;
+    font-size:11.5px;
+    text-transform:uppercase;
+    display:block;
+    margin-bottom:2px;
+}
+
+.client-actions{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.client-actions .primary-btn,
+.client-actions .secondary-btn{
+    min-width:120px;
+    flex:0 0 auto;
+}
+
+@media(max-width:768px){
+    .client-meta{ grid-template-columns:1fr; }
+    .client-actions{ flex-direction:column; }
+    .client-actions .primary-btn,
+    .client-actions .secondary-btn{ width:100%; }
+}
