@@ -4,11 +4,13 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="theme-color" content="#2563eb">
 <title>ZenLedger | Daily CA Utility</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
 <link href="style.css" rel="stylesheet"/>
+<link rel="manifest" href="manifest.json">
 </head>
 <body>
 <div class="layout">
@@ -242,10 +244,41 @@
 </div>
 <div class="form-group"><label for="email">Email</label><input id="email" type="email"/></div>
 <div class="form-group"><label for="address">Address</label><input id="address" type="text"/></div>
+
 <div class="button-group">
-<button class="primary-btn" id="save-client-btn" type="button">Save Client</button>
-<button class="secondary-btn" id="clear-client-btn" type="button">Clear</button>
+    <button type="button" id="save-client-btn" class="primary-btn">
+        Save Client
+    </button>
+
+    <button type="button" id="clear-client-btn" class="secondary-btn">
+        Clear
+    </button>
+
+    <button type="button" id="export-clients-btn" class="secondary-btn">
+        Export JSON
+    </button>
+
+    <button type="button" id="export-csv-btn" class="secondary-btn">
+        Export CSV
+    </button>
+
+    <button type="button" id="export-excel-btn" class="secondary-btn">
+        Export Excel
+    </button>
+
+    <button type="button" id="import-json-btn" class="secondary-btn">
+        Import JSON
+    </button>
+
+    <input
+        type="file"
+        id="import-json-file"
+        accept=".json"
+        hidden
+    >
 </div>
+
+
 <div class="result-box">
 <div class="result-row"><span>Total Clients</span><strong id="client-count">0</strong></div>
 <hr/>
@@ -265,6 +298,7 @@
 
 </main>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
