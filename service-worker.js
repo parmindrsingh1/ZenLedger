@@ -1,4 +1,4 @@
-const CACHE_NAME = "zenledger-v1";
+const CACHE_NAME = "zenledger-v2";
 
 const FILES_TO_CACHE = [
     "./",
